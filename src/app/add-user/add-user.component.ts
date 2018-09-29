@@ -14,11 +14,12 @@ export class AddUserComponent implements OnInit {
 
   ngOnInit() {}
 
-	createUser (username, password) {
-		console.log(username + " " + password);
-	    this.http.get("addUser?username=" + username + "&password=" + password).subscribe(res => {
+	createUser (username, password, user_type) {
+		console.log(username + " " + password + " " + user_type);
+	    this.http.get("addUser?username=" + username + "&password=" + password + "&userType=" + user_type).subscribe(res => {
 	      var x = JSON.parse(JSON.stringify(res))
-	      this.router.navigateByUrl("users")
+	      //this.router.navigateByUrl("users")
+        alert("Congradualtions " + username + " has been added!");
     	});
     }
 

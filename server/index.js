@@ -29,10 +29,21 @@ app.all('/fetchUsers', (_, res) => {
 app.all('/addUser', (req, res) => {
     var username = req.query.username;
     var password = req.query.password;
-    console.log("username: " + username + "password: " + password)
-    require('./database/users/addUser.js')(MongoClient, url, username, password, function(users){
+    var userType = req.query.userType;
+    console.log("username: " + username + " password: " + password + " userType: " + userType)
+    require('./database/users/addUser.js')(MongoClient, url, username, password, userType, function(users){
+        console.log(users);
         res.send({success: true, users: users});
     });
+});
+
+
+app.all('/login', (req, res) => {
+    var username = req.query.username;
+    var password = req.query.password;
+    require('./database/users/login.js')(MongoClient, url, username, password, function(users){
+        res.send({success:true, users: users});
+    })
 });
 
 // connects to database
@@ -40,6 +51,7 @@ app.all('/addUser', (req, res) => {
 MongoClient.connect(url, {poolsize:10}, function(err, db) {
 	if (err) throw err;
 	const dbo = db.db("assignment2");
+    
 
 	require('./database/create.js')(app, dbo);
 

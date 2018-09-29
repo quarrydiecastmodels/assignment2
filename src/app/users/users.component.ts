@@ -12,6 +12,10 @@ export class UsersComponent implements OnInit {
 	
 	users;
 
+	id;
+	username;
+	userType;
+
 	constructor(private router: Router, private form: FormsModule, private http: HttpClient) { }
 
 	ngOnInit() {
@@ -25,6 +29,13 @@ export class UsersComponent implements OnInit {
 	  		this.users = x.users;
 	  	});
 	  	console.log(this.users);
+	}
+
+	edit(u) {
+		console.log(u);
+		this.id = u._id;
+		this.username = u.username;
+		this.userType = u.userType;
 	}
 
 }
