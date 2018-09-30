@@ -14,6 +14,7 @@ export class UsersComponent implements OnInit {
 
 	id;
 	username;
+	password;
 	userType;
 
 	constructor(private router: Router, private form: FormsModule, private http: HttpClient) { }
@@ -35,7 +36,18 @@ export class UsersComponent implements OnInit {
 		console.log(u);
 		this.id = u._id;
 		this.username = u.username;
+		this.password = u.password;
 		this.userType = u.userType;
+	}
+
+	updateUser () {
+		console.log(this.username + " " + this.userType);
+		this.http.get(
+			"update?id=" + this.id + "&username=" + this.username + "&password=" + this.password + "&userType=" + this.userType
+			).subscribe(res => {
+	    	var x = JSON.parse(JSON.stringify(res))
+	    	this.fetchUsers();
+	    });
 	}
 
 }

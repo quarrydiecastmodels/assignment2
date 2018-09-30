@@ -37,13 +37,22 @@ app.all('/addUser', (req, res) => {
     });
 });
 
-
 app.all('/login', (req, res) => {
     var username = req.query.username;
     var password = req.query.password;
     require('./database/users/login.js')(MongoClient, url, username, password, function(users){
         res.send({success:true, users: users});
     })
+});
+
+app.all('/update', (req, res) => {
+    var id = req.query.id;
+    var username = req.query.username;
+    var password = req.query.password;
+    var userType = req.query.userType;
+    require('./database/users/updateUser.js')(MongoClient, url, id, username, password, userType, function(users) {
+        res.send({success:true, users: users});
+    });
 });
 
 // connects to database
