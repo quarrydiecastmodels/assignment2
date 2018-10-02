@@ -50,4 +50,11 @@ export class UsersComponent implements OnInit {
 	    });
 	}
 
+	delete(id) {
+		this.http.get("deleteUser?id=" + id).subscribe(res => {
+	      var x = JSON.parse(JSON.stringify(res))
+	  		this.fetchUsers();
+	  	});
+	}
+
 }

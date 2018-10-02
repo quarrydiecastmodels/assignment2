@@ -55,12 +55,17 @@ app.all('/update', (req, res) => {
     });
 });
 
-// connects to database
+app.all('/deleteUser', (req, res) => {
+    var id = req.query.id;
+    require('./database/users/deleteUser.js')(MongoClient, url, id, function(users){
+        res.send({success: true, users: users});
+    })
+})
 
+// connects to database
 MongoClient.connect(url, {poolsize:10}, function(err, db) {
 	if (err) throw err;
-	const dbo = db.db("assignment2");
-    
+	const dbo = db.db("assignment2"); 
 
 	require('./database/create.js')(app, dbo);
 

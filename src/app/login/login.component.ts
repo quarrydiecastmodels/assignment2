@@ -22,10 +22,19 @@ export class LoginComponent implements OnInit {
 		if ( this.username == "super" && this.password == "1234" ) {
 			localStorage.setItem("username", this.username);
 			localStorage.setItem("user_type", "super");
-			this.router.navigateByUrl('/addUser');
+			this.router.navigateByUrl('/users');
 		} else {
 			this.http.get("login?username=" + this.username + "&password=" + this.password).subscribe(res => {
-		      //var x = JSON.parse(JSON.stringify(res));
+		      var x = JSON.parse(JSON.stringify(res));
+		      console.log(x);
+		      if (x.users == null || x.users.length == 0 ) {
+		      	console.log("Something Wrong");
+		      	alert("Username or Password do not match");
+		      } else {
+		      	localStorage.setItem("username", this.username);
+				localStorage.setItem("user_type", "super");
+				this.router.navigateByUrl('/users');
+		      }
 		      //this.products = x.products;
 		    });
 		}
